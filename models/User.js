@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var hotelSchema = Schema({
+var userSchema = Schema({
   name: String,
   surname: String,
   password: ,
@@ -10,4 +10,4 @@ var hotelSchema = Schema({
 });
 
 
-module.exports = mongoose.model("Hotel", htelSchema)
+module.exports = mongoose.model("User", userSchema)

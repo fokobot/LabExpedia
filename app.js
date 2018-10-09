@@ -3,6 +3,7 @@ require("./config/db");
 const express = require("express");
 const bodyParser = require("body-parser");
 const taskController = require("./controllers/TaskController");
+const hotelController = require("./controllers/HotelController");
 
 var app = express();
 
@@ -12,6 +13,11 @@ app.use(bodyParser.json());
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
+
+app
+  .route("/hotels")
+  .get(hotelController.listAllHotels)
+  .post(hotelController.createNewHotel);
 
 app
   .route("/tasks")
