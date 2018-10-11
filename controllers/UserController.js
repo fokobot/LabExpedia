@@ -15,7 +15,7 @@ exports.new = (req, res) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.status(201).json(user);
+    res.status(201).json(user.id);
   });
 };
 
