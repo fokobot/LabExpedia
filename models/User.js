@@ -1,3 +1,5 @@
+// TODO: Validar email como único
+// TODO: En el controlador, encriptar la contraseña.
 /***********************************
 ****** IMPORTING DEPENDENCIES ******
 ***********************************/
