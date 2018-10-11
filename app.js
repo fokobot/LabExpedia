@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const taskController = require("./controllers/TaskController");
 const hotelController = require("./controllers/HotelController");
+const userController = require('./controllers/UserController');
 
 var app = express();
 
@@ -18,6 +19,12 @@ app
   .route("/hotels")
   .get(hotelController.listAllHotels)
   .post(hotelController.createNewHotel);
+
+
+app
+  .route('/users')
+  .get(userController.all)
+  .post(userController.new)
 
 app
   .route("/tasks")

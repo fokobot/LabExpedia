@@ -22,3 +22,4 @@ mongoose.connect(dbURI, options).then(
 
 require("../models/Task");
 require("../models/Hotel");
+require("../models/User");
