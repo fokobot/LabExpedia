@@ -1,3 +1,7 @@
+// TODO: Sanitize query "size" => ALways to lowercase
+/**************************************
+******* IMPORTING HOTEL SCHEMA ********
+**************************************/
 const Hotel = require("../models/Hotel");
 
 exports.listAllHotels = (req, res) => {
@@ -31,7 +35,7 @@ exports.search = (req, res) => {
   // checks hotel size
   if (req.query.size){
     if(req.query.size == 'small'){
-      criteria.rooms = {$gte : 0, $lte: 50};
+      criteria.rooms = {'$gte' : 0, '$lte': 50};
     } else if(req.query.size == 'medium') {
       criteria.rooms = {$gt : 50, $lte: 100};
     } else {
@@ -48,6 +52,10 @@ exports.search = (req, res) => {
       res.status(200).json(hotels);
     });
 };
+
+exports.searchByRange = (req, res) => {
+  
+}
 
 exports.createNewHotel = (req, res) => {
   var datos = req.body;

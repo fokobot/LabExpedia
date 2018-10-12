@@ -2,9 +2,6 @@ require("./config/db");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const taskController = require("./controllers/TaskController");
-const hotelController = require("./controllers/HotelController");
-const userController = require('./controllers/UserController');
 
 var app = express();
 
@@ -15,18 +12,15 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app
-  .route("/hotels")
-  .get(hotelController.listAllHotels)
-  .post(hotelController.createNewHotel);
+// ********* *Importing routers *********
+const hotels = require('./routes/hotels');
+const users = require('./routes/hotels');
 
-app.route('/hotels/search')
-    .get(hotelController.search)
+// ********** HOTEL ROUTES ********
+app.use('/hotels', hotels);
+// ********** USER ROUTES *********
+app.use('/users', users);
 
-app
-  .route('/users')
-  .get(userController.all)
-  .post(userController.new)
 
 app.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!")
