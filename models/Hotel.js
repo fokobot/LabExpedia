@@ -1,5 +1,6 @@
 // TODO Fax must accept special symbols.
 // TODO Phone must be separated when importing the CSV.
+// TODO Fix message for latitude and longitude validations.
 /***********************************
 ****** IMPORTING DEPENDENCIES ******
 ***********************************/
@@ -58,14 +59,9 @@ var hotelSchema = Schema({
   },
   state: String,
   rooms: {
-    type: String,
+    type: Number,
     required: true,
-    validate: [
-      validate({
-        validator: 'isNumeric',
-        min: [0, 'The number of rooms must be a valid number.'],
-      })
-    ]
+    min: [0, 'The number of rooms must be a valid number.'],
   },
   type: {
     type: String,

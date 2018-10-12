@@ -20,6 +20,8 @@ app
   .get(hotelController.listAllHotels)
   .post(hotelController.createNewHotel);
 
+app.route('/hotels/search')
+    .get(hotelController.search)
 
 app
   .route('/users')
