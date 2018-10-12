@@ -87,11 +87,11 @@ var hotelSchema = Schema({
       enum: ['Point'],
       required: true
     },
-    latitud: {
+    latitude: {
       type: Number,
       required: true
     },
-    longitud: {
+    longitude: {
       type: Number,
       required: true
     }

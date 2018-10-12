@@ -13,8 +13,8 @@ exports.createNewHotel = (req, res) => {
   var datos = req.body;
   datos.location = {
     type: "Point",
-    longitud: datos.longitud,
-    latitud: datos.latitud
+    longitude: datos.longitude,
+    latitude: datos.latitude
   }
   let newHotel = new Hotel(datos);
   newHotel.save((err, hotel) => {
