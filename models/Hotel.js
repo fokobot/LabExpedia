@@ -1,6 +1,6 @@
 // TODO Fax must accept special symbols.
-// TODO Phone must be separated when importing the CSV.
 // TODO Fix message for latitude and longitude validations.
+
 /***********************************
 ****** IMPORTING DEPENDENCIES ******
 ***********************************/
@@ -57,7 +57,12 @@ var hotelSchema = Schema({
       })
     ]
   },
-  state: String,
+  state: {
+    type: String,
+    required: [true, 'State field is required'],
+    minlength: [2, 'State name must be at least 2 characters long.'],
+    maxlength: [32, 'State name must be at most 2 characters long.']
+  },
   rooms: {
     type: Number,
     required: true,
@@ -93,6 +98,5 @@ var hotelSchema = Schema({
     }
   }
 });
-
 
 module.exports = mongoose.model("Hotel", hotelSchema)
