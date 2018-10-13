@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 
 // ********* *Importing routers *********
 const hotels = require('./routes/hotels');
-const users = require('./routes/hotels');
+const users = require('./routes/users');
 
 // ********** HOTEL ROUTES ********
 app.use('/hotels', hotels);
