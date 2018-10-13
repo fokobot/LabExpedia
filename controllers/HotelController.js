@@ -93,16 +93,36 @@ exports.readHotel = (req, res) => {
 };
 
 exports.update = (req, res) => {
-
+  if(!req.body.type || !req.body.rooms || !req.body.phone || !req.body.website || !req.body.email){
+    res.status(422).json({status: 0, message: 'Hotel type, number of rooms, phone, website and email fields are required.'});
+  } else {
+    Hotel.findById(req.params.id, (err, hotel) => {
+      if(err){
+        res.status(500).send(err);
+      }
+      // no validation here is needed as fields were already required
+      hotel.type = req.body.type;
+      hotel.rooms = req.body.rooms;
+      hotel.website = req.body.website;
+      hotel.email = req.body.email;
+      hotel.phone = req.body.phone;
+      hotel.save((e) => {
+        if(e){
+          res.status(500).json({status: 0, message: "Error updating hotel information.", errors: e.errors})
+        }
+        res.status(201).json({status: 1, message: "Hotel successfully updated."});
+      });
+    });
+  }
 };
 
 exports.delete = (req, res) => {
   Hotel.findById(req.params.id, (err, hotel) => {
     if (err) {
-      res.status(500).send(err);
+      res.status(500).json({status: 0, message: "Error searching for hotel ID", errors: err.erros});
     }
     hotel.remove((err) => {
-      res.status(200).json({ message: "Hotel successfully deleted." });
+      res.status(200).json({status: 1, message: "Hotel successfully deleted." });
     })
   });
 };
