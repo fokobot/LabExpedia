@@ -2,7 +2,8 @@
 /**************************************
 ******* IMPORTING HOTEL SCHEMA ********
 **************************************/
-const Hotel = require("../models/Hotel");
+const Hotel   = require("../models/Hotel");
+const ApiKey  = require("../models/ApiKey");
 
 exports.listAllHotels = (req, res) => {
   Hotel.find({}, (err, hotels) => {
@@ -70,18 +71,32 @@ exports.searchByRange = (req, res) => {
 }
 
 exports.createNewHotel = (req, res) => {
-  var datos = req.body;
-  datos.location = {
-    type: "Point",
-    coordinates: [datos.longitude, datos.latitude]
-  };
-  let newHotel = new Hotel(datos);
-  newHotel.save((err, hotel) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.status(201).json(hotel.id);
-  });
+  // Requires an x-api-key header to be sent in order to create the hotel
+  if(!req.headers['x-api-key']){
+    res.status(403).json({message: 'x-api-key header must be set.'})
+  } else {
+    // Checks if API Key is valid
+    let apikey = req.headers['x-api-key'];
+    ApiKey.count({apikey: apikey}, function (err, count){
+      if(count > 0){
+        // If the api key exists, the hotel is created.
+        var datos = req.body;
+        datos.location = {
+          type: "Point",
+          coordinates: [datos.longitude, datos.latitude]
+        };
+        let newHotel = new Hotel(datos);
+        newHotel.save((err, hotel) => {
+          if (err) {
+            res.status(500).send(err);
+          }
+          res.status(201).json({id: hotel.id});
+        });
+      } else {
+        res.status(401).json({message: 'Invalid API Key.'})
+      }
+    });
+  }
 };
 
 exports.readHotel = (req, res) => {
