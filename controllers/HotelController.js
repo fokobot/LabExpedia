@@ -5,11 +5,11 @@
 const Hotel = require("../models/Hotel");
 
 exports.listAllHotels = (req, res) => {
-  Hotel.find({}, (err, hotel) => {
+  Hotel.find({}, (err, hotels) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.status(200).json(hotel);
+    res.status(200).json(hotels);
   });
 };
 
@@ -56,13 +56,14 @@ exports.search = (req, res) => {
 exports.searchByRange = (req, res) => {
   if(!req.query.longitude || !req.query.latitude || !req.query.range){
     res.status(422).send({
+      status: 0,
       message: "Longitude, latitude and range are required fields."});
   } else {
-    Hotel.where('location').regex(/a/).exec((err, hoteles) => {
+    Hotel.where('location').regex(/a/).exec((err, hotels) => {
         if(err){
           res.status(500).send(err);
         } else {
-          res.json(hoteles);
+          res.json(hotels);
         }
       });
   }
@@ -79,7 +80,7 @@ exports.createNewHotel = (req, res) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.status(201).json(hotel);
+    res.status(201).json(hotel.id);
   });
 };
 
@@ -119,10 +120,10 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   Hotel.findById(req.params.id, (err, hotel) => {
     if (err) {
-      res.status(500).json({status: 0, message: "Error searching for hotel ID", errors: err.erros});
+      res.status(500).json({message: "Error searching for hotel ID", errors: err.erros});
     }
     hotel.remove((err) => {
-      res.status(200).json({status: 1, message: "Hotel successfully deleted." });
+      res.status(200).json({message: "Hotel successfully deleted." });
     })
   });
 };
