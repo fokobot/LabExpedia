@@ -13,13 +13,16 @@ app.get('/', function (req, res) {
 });
 
 // ********* *Importing routers *********
-const hotels = require('./routes/hotels');
-const users = require('./routes/users');
+const hotels  = require('./routes/hotels');
+const users   = require('./routes/users');
+const apikeys = require('./routes/apikeys');
 
 // ********** HOTEL ROUTES ********
 app.use('/hotels', hotels);
 // ********** USER ROUTES *********
 app.use('/users', users);
+// ******* API KEYS ROUTES ********
+app.use('/apikeys', apikeys);
 
 
 app.use(function (req, res, next) {

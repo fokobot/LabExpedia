@@ -22,3 +22,4 @@ mongoose.connect(dbURI, options).then(
 
 require("../models/Hotel");
 require("../models/User");
+require("../models/ApiKey");
