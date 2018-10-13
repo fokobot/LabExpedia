@@ -1,5 +1,3 @@
-// TODO: Validar email como único
-// TODO: En el controlador, encriptar la contraseña.
 /***********************************
 ****** IMPORTING DEPENDENCIES ******
 ***********************************/
@@ -27,36 +25,30 @@ var emailValidator = [
 /*************************
 ** DEFINING THE SCHEMA ***
 **************************/
-var userSchema = Schema({
-  name: {
+var apiKeySchema = Schema({
+  contactname: {
     type: String,
     required: true,
-    minlength: [3, 'Name should be at least 3 characters long.'],
-    index: true
+    minlength: [3, 'Contact name should be at least 3 characters long.'],
+    maxlength: [28, 'Contact name should me at most 28 characters long.']
   },
-  lastname: {
+  company: {
     type: String,
     required: true,
-    minlength: [3, 'Last name should be at least 3 characters long.']
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: [8, 'Password should be at least 8 characters long.'],
-    maxlength: [20, 'Password should be at most 20 characters long.']
+    minlength: [3, 'Company name should be at least 3 characters long.'],
+    maxlength: [30, 'Company name should be at most 30 characters long.']
   },
   email:  {
     type: String,
     required: true,
     validate: emailValidator
   },
-  address: {
+  apikey: {
     type: String,
     required: true,
-    minlength: [6, 'Address should be at least 6 characters long.'],
-    maxlength: [20, 'Address should be at most 20 characters long.'],
-    index: true
+    minlength: [32, 'API key should be at least 32 characters long.'],
+    maxlength: [32, 'API key should be at most 32 characters long.']
   },
 });
 
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("ApiKey", apiKeySchema)

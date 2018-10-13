@@ -18,8 +18,12 @@
   "author": "Cárcamo, L., Osorio, F.",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "mongoose": "^5.2.17"
+    "hat": "0.0.3",
+    "mongoose": "^5.2.17",
+    "mongoose-validator": "^2.1.0",
+    "supervisor": "^0.12.0"
   }
 }

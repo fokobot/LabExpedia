@@ -9,7 +9,7 @@
   Ejecución
     <ol>
       <li>En la consola de comandos, asignar el directorio de la aplicación como el directorio actual.</li>
-      <li>Ejecutar el comando 'supervisor bin/www'</li>
+      <li>Ejecutar el comando 'supervisor app.js'</li>
     </ol>
   </li>
 </ol>

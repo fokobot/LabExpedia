@@ -2,8 +2,6 @@ require("./config/db");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const taskController = require("./controllers/TaskController");
-const hotelController = require("./controllers/HotelController");
 
 var app = express();
 
@@ -14,30 +12,23 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app
-  .route("/hotels")
-  .get(hotelController.listAllHotels)
-  .post(hotelController.createNewHotel);
+// ********* *Importing routers *********
+const hotels  = require('./routes/hotels');
+const users   = require('./routes/users');
+const apikeys = require('./routes/apikeys');
 
-app
-  .route("/tasks")
-  .get(taskController.listAllTasks)
-  .post(taskController.createNewTask);
+// ********** HOTEL ROUTES ********
+app.use('/hotels', hotels);
+// ********** USER ROUTES *********
+app.use('/users', users);
+// ******* API KEYS ROUTES ********
+app.use('/apikeys', apikeys);
 
-app
-  .route("/tasks/:taskid")
-  .get(taskController.readTask)
-  .put(taskController.updateTask)
-  .delete(taskController.deleteTask);
-
-app.route('/prueba/:uwu').get(function (req, res, next) {
-  res.send('Hola' + req.params.uwu);
-});
 
 app.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!")
 })
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('API Server started successfully!');
 });
