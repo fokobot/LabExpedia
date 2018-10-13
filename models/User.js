@@ -31,7 +31,8 @@ var userSchema = Schema({
   name: {
     type: String,
     required: true,
-    minlength: [3, 'Name should be at least 3 characters long.']
+    minlength: [3, 'Name should be at least 3 characters long.'],
+    index: true
   },
   lastname: {
     type: String,
@@ -53,7 +54,8 @@ var userSchema = Schema({
     type: String,
     required: true,
     minlength: [6, 'Address should be at least 6 characters long.'],
-    maxlength: [20, 'Address should be at most 20 characters long.']
+    maxlength: [20, 'Address should be at most 20 characters long.'],
+    index: true
   },
 });
 

@@ -8,7 +8,7 @@ const options = {
   poolSize: 10,
   useNewUrlParser: true,
 };
-
+mongoose.set('useCreateIndex', true);
 mongoose.connect(dbURI, options).then(
   () => {
     console.log("Database connection established!");
