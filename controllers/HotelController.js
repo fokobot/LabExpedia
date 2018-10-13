@@ -54,16 +54,26 @@ exports.search = (req, res) => {
 };
 
 exports.searchByRange = (req, res) => {
-  
+  if(!req.query.longitude || !req.query.latitude || !req.query.range){
+    res.status(422).send({
+      message: "Longitude, latitude and range are required fields."});
+  } else {
+    Hotel.where('location').regex(/a/).exec((err, hoteles) => {
+        if(err){
+          res.status(500).send(err);
+        } else {
+          res.json(hoteles);
+        }
+      });
+  }
 }
 
 exports.createNewHotel = (req, res) => {
   var datos = req.body;
   datos.location = {
     type: "Point",
-    longitude: datos.longitude,
-    latitude: datos.latitude
-  }
+    coordinates: [datos.longitude, datos.latitude]
+  };
   let newHotel = new Hotel(datos);
   newHotel.save((err, hotel) => {
     if (err) {
@@ -82,25 +92,17 @@ exports.readHotel = (req, res) => {
   });
 };
 
-exports.updateHotel = (req, res) => {
-  Hotel.findOneAndUpdate(
-    { _id: req.params.hotelid },
-    req.body,
-    { new: true },
-    (err, hotel) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      res.status(200).json(hotel);
-    }
-  );
+exports.update = (req, res) => {
+
 };
 
-exports.deleteHotel = (req, res) => {
-  Hotel.remove({ _id: req.params.hotelid }, (err, hotel) => {
+exports.delete = (req, res) => {
+  Hotel.findById(req.params.id, (err, hotel) => {
     if (err) {
-      res.status(404).send(err);
+      res.status(500).send(err);
     }
-    res.status(200).json({ message: "Hotel successfully deleted" });
+    hotel.remove((err) => {
+      res.status(200).json({ message: "Hotel successfully deleted." });
+    })
   });
 };

@@ -31,17 +31,33 @@ var emailValidator = [
   })
 ];
 /*************************
+**** AUXILIAR SCHEMA  ***
+*************************/
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true
+  }
+});
+/*************************
 ** DEFINING THE SCHEMA ***
 **************************/
 var hotelSchema = Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   email: {
     type: String,
     required: true,
-    validate: emailValidator
+    validate: emailValidator,
+    unique: true
   },
   website: {
     type: String,
@@ -61,7 +77,8 @@ var hotelSchema = Schema({
     type: String,
     required: [true, 'State field is required'],
     minlength: [2, 'State name must be at least 2 characters long.'],
-    maxlength: [32, 'State name must be at most 2 characters long.']
+    maxlength: [32, 'State name must be at most 2 characters long.'],
+    index: true
   },
   rooms: {
     type: Number,
@@ -83,19 +100,9 @@ var hotelSchema = Schema({
     type: [String],
   },
   location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true
-    },
-    latitude: {
-      type: Number,
-      required: true
-    },
-    longitude: {
-      type: Number,
-      required: true
-    }
+    type: pointSchema,
+    index: true,
+    required: true
   }
 });
 
